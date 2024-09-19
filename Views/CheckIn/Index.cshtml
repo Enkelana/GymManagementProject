@@ -1,0 +1,37 @@
+﻿@model GymManagementProject.BAL.DTOs.CheckInViewModel
+
+@{
+    ViewBag.Title = "Check In";
+}
+
+<h2>Check In</h2>
+
+<form asp-action="CheckIn" method="post">
+    <div class="form-group">
+        <label for="registrationCard">Registration Card</label>
+        <input type="text" class="form-control" id="registrationCard" name="registrationCard" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Check In</button>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (Model != null && !Model.IsError)
+{
+    <div class="alert alert-success mt-3">
+        <strong>Member Name:</strong> @Model.MemberName <br />
+        <strong>Remaining Sessions:</strong> @Model.RemaningSessions
+    </div>
+}

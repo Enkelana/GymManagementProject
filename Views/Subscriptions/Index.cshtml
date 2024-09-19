@@ -1,0 +1,78 @@
+﻿@model IEnumerable<GymManagementProject.BAL.DTOs.SubscriptionDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form method="get" asp-action="Index">
+    <div class="form-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by code,description,no of months,weekfrequency" value="@ViewData["SearchTerm"]" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfMonths)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeekFrequency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalNumberOfSessions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfMonths)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeekFrequency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalNumberOfSessions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

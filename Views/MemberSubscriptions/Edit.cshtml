@@ -1,0 +1,38 @@
+﻿@model GymManagementProject.BAL.DTOs.MemberSubscriptionEditDTO
+
+@{
+    ViewData["Title"] = "Edit Member Subscription";
+}
+
+<h1>Edit Member Subscription</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="MemberId" id="MemberId" />
+    <input type="hidden" asp-for="SubscriptionId" id="SubscriptionId" />
+    <input type="hidden" asp-for="OriginalPrice" id="OriginalPrice" />
+    <input type="hidden" asp-for="RemainingSessions" id="RemainingSessions" />
+    <input type="hidden" asp-for="EndDate" id="EndDate" />
+    <input type="hidden" asp-for="PaidPrice" id="PaidPrice" />
+
+    <div class="form-group">
+        <label asp-for="DiscountValue" class="control-label"></label>
+        <input asp-for="DiscountValue" class="form-control" />
+        <span asp-validation-for="DiscountValue" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="StartDate" class="control-label"></label>
+        <input asp-for="StartDate" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IsDeleted" class="control-label"></label>
+        <input asp-for="IsDeleted" type="checkbox" />
+        <span asp-validation-for="IsDeleted" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Save" class="btn btn-primary" />
+</form>
+
+<a asp-action="Index">Back to List</a>
+

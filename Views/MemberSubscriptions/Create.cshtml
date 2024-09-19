@@ -1,0 +1,56 @@
+﻿@model GymManagementProject.BAL.DTOs.MemberSubscriptionDTO
+
+@{
+    ViewData["Title"] = "Create Member Subscription";
+}
+
+<h2>Create Member Subscription</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="MemberId" class="control-label">Member</label>
+        <select asp-for="MemberId" class="form-control" asp-items="ViewBag.Members">
+            <option value="">Select Member</option>
+        </select>
+        <span asp-validation-for="MemberId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SubscriptionId" class="control-label">Subscription</label>
+        <select asp-for="SubscriptionId" class="form-control" asp-items="ViewBag.Subscriptions">
+            <option value="">Select Subscription</option>
+        </select>
+        <span asp-validation-for="SubscriptionId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartDate" class="control-label">Start Date</label>
+        <input asp-for="StartDate" type="date" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <input asp-for="OriginalPrice" type="hidden" />
+    <input asp-for="PaidPrice" type="hidden" />
+    <input asp-for="EndDate" type="hidden" />
+    <input asp-for="RemainingSessions" type="hidden" />
+
+    <div class="form-group">
+        <label asp-for="DiscountValue" class="control-label">Discount Value</label>
+        <input asp-for="DiscountValue" type="text" class="form-control" />
+        <span asp-validation-for="DiscountValue" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsDeleted" class="control-label">Is Deleted</label>
+        <input asp-for="IsDeleted" type="checkbox" />
+        <span asp-validation-for="IsDeleted" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

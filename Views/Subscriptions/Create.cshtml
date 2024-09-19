@@ -1,0 +1,65 @@
+﻿@model GymManagementProject.BAL.DTOs.SubscriptionDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>SubscriptionDTO</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfMonths" class="control-label"></label>
+                <input asp-for="NumberOfMonths" class="form-control" />
+                <span asp-validation-for="NumberOfMonths" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeekFrequency" class="control-label"></label>
+                <input asp-for="WeekFrequency" class="form-control" />
+                <span asp-validation-for="WeekFrequency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalNumberOfSessions" class="control-label"></label>
+                <input asp-for="TotalNumberOfSessions" class="form-control" />
+                <span asp-validation-for="TotalNumberOfSessions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPrice" class="control-label"></label>
+                <input asp-for="TotalPrice" class="form-control" />
+                <span asp-validation-for="TotalPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

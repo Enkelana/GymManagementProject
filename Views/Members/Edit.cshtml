@@ -1,0 +1,33 @@
+﻿@model GymManagementProject.BAL.DTOs.MemberDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit Member</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IsDeleted"></label>
+        <input asp-for="IsDeleted" type="checkbox" />
+        <span asp-validation-for="IsDeleted" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

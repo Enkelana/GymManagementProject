@@ -1,0 +1,57 @@
+﻿@model IEnumerable<GymManagementProject.BAL.DTOs.MemberSubscriptionDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form method="get" asp-action="Index">
+    <div class="form-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by member full name, subscription name" value="@ViewData["SearchTerm"]" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.MemberFullName)</th>
+            <th>@Html.DisplayNameFor(model => model.SubscriptionDescription)</th>
+            <th>@Html.DisplayNameFor(model => model.OriginalPrice)</th>
+            <th>@Html.DisplayNameFor(model => model.DiscountValue)</th>
+            <th>@Html.DisplayNameFor(model => model.PaidPrice)</th>
+            <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+            <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+            <th>@Html.DisplayNameFor(model => model.RemainingSessions)</th>
+            <th>@Html.DisplayNameFor(model => model.IsDeleted)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MemberFullName)</td>
+                <td>@Html.DisplayFor(modelItem => item.SubscriptionDescription)</td>
+                <td>@Html.DisplayFor(modelItem => item.OriginalPrice)</td>
+                <td>@Html.DisplayFor(modelItem => item.DiscountValue)</td>
+                <td>@Html.DisplayFor(modelItem => item.PaidPrice)</td>
+                <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.RemainingSessions)</td>
+                <td>
+                    <input type="checkbox" disabled="disabled" @(item.IsDeleted ? "checked" : "") />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
