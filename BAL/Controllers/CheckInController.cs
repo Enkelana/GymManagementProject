@@ -38,7 +38,6 @@ namespace GymManagementProject.Controllers
 
                 if (viewModel.IsError)
                 {
-
                     TempData["ErrorMessage"] = viewModel.Message;
                     return View("Index", viewModel);
                 }
@@ -52,5 +51,6 @@ namespace GymManagementProject.Controllers
                 return View("Index", viewModel);
             }
         }
+
     }
 }

@@ -40,7 +40,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<SubscriptionDTO> CreateSubscription(SubscriptionDTO subscriptionDto)
         {
             try
@@ -54,7 +53,8 @@ namespace GymManagementProject.DAL.Services
                     WeekFrequency = subscriptionDto.WeekFrequency,
                     TotalNumberOfSessions = subscriptionDto.TotalNumberOfSessions,
                     TotalPrice = subscriptionDto.TotalPrice,
-                    IsDeleted = subscriptionDto.IsDeleted
+                    IsDeleted = subscriptionDto.IsDeleted,
+                    Time = subscriptionDto.Time
                 };
 
                 if (await context.Subscriptions.AnyAsync(m => m.Code == subscription.Code))
@@ -72,7 +72,8 @@ namespace GymManagementProject.DAL.Services
                     WeekFrequency = subscription.WeekFrequency,
                     TotalNumberOfSessions = subscription.TotalNumberOfSessions,
                     TotalPrice = subscription.TotalPrice,
-                    IsDeleted = subscription.IsDeleted
+                    IsDeleted = subscription.IsDeleted,
+                    Time = subscriptionDto.Time
                 };
 
                 return subscription_dto;
@@ -106,7 +107,8 @@ namespace GymManagementProject.DAL.Services
                     WeekFrequency = s.WeekFrequency,
                     TotalNumberOfSessions = s.TotalNumberOfSessions,
                     TotalPrice = s.TotalPrice,
-                    IsDeleted = s.IsDeleted
+                    IsDeleted = s.IsDeleted,
+                    Time = s.Time
                 });
             }
             catch (Exception ex)
@@ -114,12 +116,11 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<SubscriptionEditDTO> UpdateSubscription(SubscriptionEditDTO subscriptionDto)
         {
             try
             {
-                var existingSubscription = await context.Subscriptions.FirstOrDefaultAsync(x => x.Id == subscriptionDto.Id);
+                var existingSubscription = await context.Subscriptions.FirstAsync(x => x.Id == subscriptionDto.Id);
 
                 if (existingSubscription == null)
                 {
@@ -131,6 +132,7 @@ namespace GymManagementProject.DAL.Services
                 existingSubscription.WeekFrequency = subscriptionDto.WeekFrequency;
                 existingSubscription.TotalNumberOfSessions = subscriptionDto.TotalNumberOfSessions;
                 existingSubscription.TotalPrice = subscriptionDto.TotalPrice;
+                existingSubscription.Time = subscriptionDto.Time;
 
                 if (subscriptionDto.IsDeleted)
                 {
@@ -163,7 +165,8 @@ namespace GymManagementProject.DAL.Services
                     WeekFrequency = existingSubscription.WeekFrequency,
                     TotalNumberOfSessions = existingSubscription.TotalNumberOfSessions,
                     TotalPrice = existingSubscription.TotalPrice,
-                    IsDeleted = existingSubscription.IsDeleted
+                    IsDeleted = existingSubscription.IsDeleted,
+                    Time = existingSubscription.Time
                 };
             }
             catch (Exception ex)
@@ -171,7 +174,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<IEnumerable<SubscriptionDTO>> GetAllSubscriptions()
         {
             try
@@ -187,7 +189,8 @@ namespace GymManagementProject.DAL.Services
                     WeekFrequency = s.WeekFrequency,
                     TotalNumberOfSessions = s.TotalNumberOfSessions,
                     TotalPrice = s.TotalPrice,
-                    IsDeleted = s.IsDeleted
+                    IsDeleted = s.IsDeleted,
+                    Time = s.Time
                 });
             }
             catch (Exception ex)
@@ -212,7 +215,8 @@ namespace GymManagementProject.DAL.Services
                     WeekFrequency = s.WeekFrequency,
                     TotalNumberOfSessions = s.TotalNumberOfSessions,
                     TotalPrice = s.TotalPrice,
-                    IsDeleted = s.IsDeleted
+                    IsDeleted = s.IsDeleted,
+                    Time = s.Time
                 });
             }
             catch (Exception ex)

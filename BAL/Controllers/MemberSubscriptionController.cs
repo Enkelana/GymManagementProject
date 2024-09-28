@@ -40,7 +40,6 @@ namespace GymManagementProject.BAL.Controllers
 
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(MemberSubscriptionDTO memberSubscriptionDTO)
         {
@@ -58,7 +57,6 @@ namespace GymManagementProject.BAL.Controllers
                 throw;
             }
         }
-
 
         public async Task<IActionResult> Edit(int id)
         {

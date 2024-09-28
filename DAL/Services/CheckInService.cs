@@ -1,6 +1,7 @@
 ﻿using GymManagementProject.BAL.DTOs;
 using GymManagementProject.BAL.Interfaces;
 using GymManagementProject.Data;
+using GymManagementProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,15 +9,15 @@ namespace GymManagementProject.DAL.Services
 {
     public class CheckInService : ICheckInService
     {
-        private readonly IMemberService memberService;
-        private readonly IMemberSubscriptionService memberSubscriptionService;
+       
         private readonly ApplicationDbContext context;
+        private readonly IClock clock;
 
-        public CheckInService(IMemberService memberService, IMemberSubscriptionService memberSubscriptionService, ApplicationDbContext context)
+        public CheckInService(IClock clock, ApplicationDbContext context)
         {
-            this.memberService = memberService;
-            this.memberSubscriptionService = memberSubscriptionService;
+
             this.context = context;
+            this.clock = clock;
         }
 
         public async Task<CheckInViewModel> CheckInMemberAsync(string registrationCard)
@@ -33,10 +34,11 @@ namespace GymManagementProject.DAL.Services
             }
 
             var activeSubscription = await context.MemberSubscriptions
-                .SingleOrDefaultAsync(ms => ms.MemberId == member.Id && 
-                                            !ms.IsDeleted && 
-                                            ms.StartDate <= DateOnly.FromDateTime(DateTime.Now.Date) && 
-                                            ms.EndDate >= DateOnly.FromDateTime(DateTime.Now.Date));
+                .Include(ms => ms.Subscription)
+                .Where(ms => ms.MemberId == member.Id && !ms.IsDeleted &&
+                             ms.StartDate <= DateOnly.FromDateTime(DateTime.Now.Date) &&
+                             ms.EndDate >= DateOnly.FromDateTime(DateTime.Now.Date))
+                .SingleOrDefaultAsync();
 
             if (activeSubscription == null)
             {
@@ -44,24 +46,33 @@ namespace GymManagementProject.DAL.Services
                 result.Message = "No active subscription for this member";
                 return result;
             }
-            
-            if(activeSubscription.RemainingSessions == 0)
+
+            if (activeSubscription.RemainingSessions == 0)
             {
                 result.IsError = true;
                 result.Message = "No remaining sessions available for this card";
                 return result;
             }
+            var currentHour = clock.Now.Hour;
 
+             if ((activeSubscription.Subscription.Time == SubscriptionTime.Morning && (currentHour < 6 || currentHour >= 12)) ||
+                     (activeSubscription.Subscription.Time == SubscriptionTime.Afternoon && (currentHour < 12 || currentHour >= 18)))
+            {
+                result.IsError = true;
+                result.Message = "This subscription is not valid at this time.";
+                return result;
+            }
 
             activeSubscription.RemainingSessions--;
-            context.MemberSubscriptions.Update(activeSubscription);
+            context.MemberSubscriptions.Update(activeSubscription); 
             await context.SaveChangesAsync();
 
-            result.MemberName = $"{member.FirstName} {member.LastName}"; 
-            result.RemaningSessions = activeSubscription.RemainingSessions; 
-            result.Message = "Updated member subscription"; 
+            result.MemberName = $"{member.FirstName} {member.LastName}";
+            result.RemaningSessions = activeSubscription.RemainingSessions;
+            result.Message = "Updated member subscription";
 
             return result;
         }
+
     }
 }

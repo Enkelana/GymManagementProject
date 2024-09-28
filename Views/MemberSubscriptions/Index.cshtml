@@ -27,6 +27,7 @@
             <th>@Html.DisplayNameFor(model => model.PaidPrice)</th>
             <th>@Html.DisplayNameFor(model => model.StartDate)</th>
             <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+            <th>@Html.DisplayNameFor(model => model.TimeOfDay)</th>
             <th>@Html.DisplayNameFor(model => model.RemainingSessions)</th>
             <th>@Html.DisplayNameFor(model => model.IsDeleted)</th>
             <th></th>
@@ -43,6 +44,7 @@
                 <td>@Html.DisplayFor(modelItem => item.PaidPrice)</td>
                 <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.TimeOfDay)</td>
                 <td>@Html.DisplayFor(modelItem => item.RemainingSessions)</td>
                 <td>
                     <input type="checkbox" disabled="disabled" @(item.IsDeleted ? "checked" : "") />

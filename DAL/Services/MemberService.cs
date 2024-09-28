@@ -78,7 +78,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<IEnumerable<MemberDTO>> SearchMember(string searchTerm)
         {
             try
@@ -138,7 +137,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<MemberEditDTO> UpdateMember(MemberEditDTO memberDto)
         {
             try
@@ -151,11 +149,10 @@ namespace GymManagementProject.DAL.Services
                 }
 
                 existingMember.Email = memberDto.Email;
+                existingMember.IsDeleted = memberDto.IsDeleted;
 
                 if (memberDto.IsDeleted)
                 {
-                    existingMember.IsDeleted = true;
-
                     var memberSubscriptions = await context.MemberSubscriptions
                         .Where(ms => ms.MemberId == existingMember.Id && ms.IsDeleted == false)
                         .ToListAsync();
@@ -164,12 +161,7 @@ namespace GymManagementProject.DAL.Services
                     {
                         subscription.IsDeleted = true;
                     }
-
                     context.MemberSubscriptions.UpdateRange(memberSubscriptions);
-                }
-                else
-                {
-                    existingMember.IsDeleted = false;
                 }
 
                 context.Members.Update(existingMember);

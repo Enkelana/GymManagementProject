@@ -85,6 +85,7 @@ namespace GymManagementProject.BAL.Controllers
             subscription.TotalNumberOfSessions = subscriptionDTO.TotalNumberOfSessions;
             subscription.TotalPrice = subscriptionDTO.TotalPrice;
             subscription.IsDeleted = subscriptionDTO.IsDeleted;
+            subscription.Time = subscriptionDTO.Time;
 
             return View(subscription);
         }

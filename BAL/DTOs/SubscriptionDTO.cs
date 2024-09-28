@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GymManagementProject.Models;
+using System.ComponentModel.DataAnnotations;
 namespace GymManagementProject.BAL.DTOs
 {
     public class SubscriptionDTO
@@ -22,5 +23,6 @@ namespace GymManagementProject.BAL.DTOs
         public decimal TotalPrice { get; set; }
 
         public bool IsDeleted { get; set; }
+        public SubscriptionTime Time { get; set; }
     }
 }

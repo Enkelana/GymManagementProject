@@ -1,3 +1,4 @@
+using GymManagementProject.BAL.DTOs;
 using GymManagementProject.BAL.Interfaces;
 using GymManagementProject.DAL.Services;
 using GymManagementProject.Data;
@@ -18,7 +19,7 @@ namespace GymManagementProject
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()  
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddAuthorization(options =>
@@ -32,6 +33,7 @@ namespace GymManagementProject
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
             builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService>();
             builder.Services.AddScoped<ICheckInService, CheckInService>();
+            builder.Services.AddScoped<IClock, SystemClock>();
 
             builder.Services.AddControllersWithViews();
 
@@ -40,7 +42,7 @@ namespace GymManagementProject
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                await CreateRoles(services);  
+                await CreateRoles(services);
             }
 
 
@@ -96,7 +98,7 @@ namespace GymManagementProject
                     Email = receptionistEmail,
                     EmailConfirmed = true,
                 };
-                await userManager.CreateAsync(receptionistUser, "Test.1234"); 
+                await userManager.CreateAsync(receptionistUser, "Test.1234");
             }
 
             await userManager.AddToRoleAsync(receptionistUser, "Receptionist");

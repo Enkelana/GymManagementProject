@@ -2,6 +2,12 @@
 
 namespace GymManagementProject.Models
 {
+    public enum SubscriptionTime
+    {
+        Morning = 0,
+        Afternoon = 1,
+        AllDay = 2
+    }
     public class Subscription
     {
         [Key]
@@ -30,6 +36,7 @@ namespace GymManagementProject.Models
         public decimal TotalPrice { get; set; }
 
         public bool IsDeleted { get; set; }
+        public SubscriptionTime Time { get; set; }
     }
 }
 

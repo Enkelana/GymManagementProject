@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GymManagementProject.Models;
+using System.ComponentModel.DataAnnotations;
 namespace GymManagementProject.BAL.DTOs
 {
     public class MemberSubscriptionDTO
@@ -28,5 +29,6 @@ namespace GymManagementProject.BAL.DTOs
 
         public string MemberFullName { get; set; }
         public string SubscriptionDescription { get; set; }
+        public SubscriptionTime TimeOfDay { get; internal set; }
     }
 }

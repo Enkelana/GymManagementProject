@@ -14,12 +14,10 @@ namespace GymManagementProject.DAL.Services
         {
             this.context = context;
         }
-
-
         public async Task<MemberSubscriptionDTO> CreateMemberSubscription(MemberSubscriptionDTO memberSubscriptionDto)
         {
             DateOnly todayDate = DateOnly.FromDateTime(DateTime.Today);
-     
+
             if (memberSubscriptionDto.StartDate < todayDate)
             {
                 throw new InvalidOperationException("Start date cannot be in the past.");
@@ -59,7 +57,7 @@ namespace GymManagementProject.DAL.Services
                     StartDate = memberSubscriptionDto.StartDate,
                     EndDate = endDate,
                     RemainingSessions = subscription.TotalNumberOfSessions,
-                    IsDeleted = memberSubscriptionDto.IsDeleted
+                    IsDeleted = memberSubscriptionDto.IsDeleted,
                 };
 
                 context.MemberSubscriptions.Add(memberSubscription);
@@ -75,7 +73,7 @@ namespace GymManagementProject.DAL.Services
                     StartDate = memberSubscription.StartDate,
                     EndDate = memberSubscription.EndDate,
                     RemainingSessions = memberSubscription.RemainingSessions,
-                    IsDeleted = memberSubscription.IsDeleted
+                    IsDeleted = memberSubscription.IsDeleted,
                 };
             }
             catch (Exception ex)
@@ -83,8 +81,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
-
         public async Task<MemberSubscriptionEditDTO> UpdateMemberSubscription(MemberSubscriptionEditDTO memberSubscriptionDto)
         {
             try
@@ -148,7 +144,7 @@ namespace GymManagementProject.DAL.Services
                     StartDate = existingMemberSubscription.StartDate,
                     EndDate = existingMemberSubscription.EndDate,
                     RemainingSessions = existingMemberSubscription.RemainingSessions,
-                    IsDeleted = existingMemberSubscription.IsDeleted
+                    IsDeleted = existingMemberSubscription.IsDeleted,
                 };
             }
             catch (Exception ex)
@@ -156,7 +152,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<MemberSubscriptionDTO> GetByIdMemberSubscription(int id)
         {
             try
@@ -182,7 +177,8 @@ namespace GymManagementProject.DAL.Services
                     RemainingSessions = subscription.RemainingSessions,
                     IsDeleted = subscription.IsDeleted,
                     MemberFullName = $"{subscription.Member.FirstName} {subscription.Member.LastName}",
-                    SubscriptionDescription = subscription.Subscription.Description
+                    SubscriptionDescription = subscription.Subscription.Description,
+                    TimeOfDay = subscription.Subscription.Time,
                 };
             }
             catch (Exception ex)
@@ -211,6 +207,7 @@ namespace GymManagementProject.DAL.Services
                         ms.EndDate,
                         ms.RemainingSessions,
                         ms.IsDeleted,
+                        TimeOfDay = s.Time,
                         MemberFullName = m.FirstName + " " + m.LastName,
                         SubscriptionDescription = s.Description
                     }).ToListAsync();
@@ -232,7 +229,8 @@ namespace GymManagementProject.DAL.Services
                     RemainingSessions = ms.RemainingSessions,
                     IsDeleted = ms.IsDeleted,
                     MemberFullName = ms.MemberFullName,
-                    SubscriptionDescription = ms.SubscriptionDescription
+                    SubscriptionDescription = ms.SubscriptionDescription,
+                    TimeOfDay = ms.TimeOfDay,
                 });
             }
             catch (Exception ex)
@@ -240,7 +238,6 @@ namespace GymManagementProject.DAL.Services
                 throw;
             }
         }
-
         public async Task<IEnumerable<MemberSubscriptionDTO>> GetAllMemberSubscriptions()
         {
             try
@@ -262,8 +259,9 @@ namespace GymManagementProject.DAL.Services
                     EndDate = ms.EndDate,
                     RemainingSessions = ms.RemainingSessions,
                     IsDeleted = ms.IsDeleted,
+                    TimeOfDay = ms.Subscription.Time,
                     MemberFullName = $"{ms.Member.FirstName} {ms.Member.LastName}",
-                    SubscriptionDescription = ms.Subscription.Description
+                    SubscriptionDescription = ms.Subscription.Description,
                 });
             }
             catch (Exception ex)
